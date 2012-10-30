@@ -54,4 +54,18 @@ abstract class BaseController extends Controller
 	{
 		return $this->entityManager->getRepository($entityName);
 	}
+
+	/*
+	 * Security
+	 */
+	/**
+	 * Проверка роли текущего пользователя
+	 * @param string|array $role - Роль или массив ролей для проверки
+	 * @return boolean
+	 */
+	protected function checkRole($role)
+	{
+		return $this->securityContext->isGranted($role);
+	}
+
 }
