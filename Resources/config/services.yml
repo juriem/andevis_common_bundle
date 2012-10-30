@@ -23,6 +23,15 @@ services:
       - [ setContainer, [ @service_container] ]
     tags:
       - { name: kernel.event_subscriber }
+
+
+# Twig
+  andevis.twig.extension:
+    class: Andevis\CommonBundle\Extension\Twig\CommonTwigExtension
+    tags:
+      - { name: twig.extension }
+
+
 #    andevis_common.example:
 #        class: %andevis_common.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
