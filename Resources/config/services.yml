@@ -16,6 +16,7 @@ services:
     tags:
       - { name: kernel.event_subscriber }
 
+  # Comment
   andevis.event_listener.redirector_listener:
     class: Andevis\CommonBundle\Listener\RedirectorListener
     calls:
