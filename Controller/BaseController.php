@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Andevis\CommonBundle\Annotation\Injector;
 
 /**
- *
+ * Вспомогательный класс для контроллера. Работает вместе дополнительным листенером
  * @author juriem
  *
  */
