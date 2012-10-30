@@ -1,0 +1,27 @@
+parameters:
+#    andevis_common.example.class: Andevis\CommonBundle\Example
+
+services:
+  andevis.event_listener.base_controller_listener:
+    class: Andevis\CommonBundle\Listener\BaseControllerListener
+    scope: container
+    calls:
+      - [ setContainer, [ @service_container]]
+    tags:
+      - { name: kernel.event_subscriber }
+
+  andevis.event_listener.json_response_listener:
+    class: Andevis\CommonBundle\Listener\JSONResponseListener
+    arguments: [ @annotation_reader, @translator ]
+    tags:
+      - { name: kernel.event_subscriber }
+
+  andevis.event_listener.redirector_listener:
+    class: Andevis\CommonBundle\Listener\RedirectorListener
+    calls:
+      - [ setContainer, [ @service_container] ]
+    tags:
+      - { name: kernel.event_subscriber }
+#    andevis_common.example:
+#        class: %andevis_common.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
