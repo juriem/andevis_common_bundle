@@ -46,12 +46,19 @@ class RedirectorListener implements EventSubscriberInterface, ContainerAwareInte
 	protected $container;
 
 	/**
+	 *
+	 * @var Reader
+	 */
+	protected $reader;
+
+	/**
 	 * (non-PHPdoc)
 	 * @see \Symfony\Component\DependencyInjection\ContainerAware::setContainer()
 	 */
 	public function setContainer(ContainerInterface $container = null)
 	{
 		$this->container = $container;
+
 	}
 
 	public function getName()
@@ -62,9 +69,68 @@ class RedirectorListener implements EventSubscriberInterface, ContainerAwareInte
 	public static function getSubscribedEvents()
 	{
 		return array(
-				KernelEvents::REQUEST => array(array('onKernelRequest', 0)),
+				KernelEvents::CONTROLLER => array(array('onKernelController')),
+				KernelEvents::VIEW => array(array('onKernelView')),
+				//KernelEvents::REQUEST => array(array('onKernelRequest', 0)),
 				);
 	}
+
+	public function onKernelController(FilterControllerEvent $event)
+	{
+		if (!is_array($controller = $event->getController())) {
+			return;
+		}
+
+		$object = new \ReflectionObject($controller[0]);
+		$method = $object->getMethod($controller[1]);
+
+
+		$objectReflection = new \ReflectionObject($object);
+
+		$classAnnotations = $this->container->get('annotation_reader')->getClassAnnotation($objectReflection);
+
+		// Processing global annotations
+		/*$classAnnotations = $this->container->get('annotation_reader')->getClassAnnotations($objectReflection);
+		foreach($classAnnotations as $annotation) {
+			if ($this->processAnnotation($annotation, $event)) {
+
+				return;
+			}
+		}*/
+
+
+		// Processing method annotations
+		$methodAnnotations = $this->container->get('annotation_reader')->getMethodAnnotations($objectReflection->getMethod($methodName));
+
+		foreach($methodAnnotations as $annotation) {
+
+			if ($annotation instanceof \Andevis\CommonBundle\Annotation\Redirector){
+				$event->getRequest()->attributes->set('_redirector', $annotation);
+			}
+		}
+	}
+
+
+	public function onKernelView(GetResponseForControllerResultEvent $event)
+	{
+		$request = $event->getRequest();
+
+		// Json response
+		if (null !== ($annotation = $request->attributes->get('_redirector', null))) {
+			if ($annotation instanceof \Andevis\CommonBundle\Annotation\Redirector)  {
+
+				if ($annotation->getExternal()) {
+					$url = $annotation->getUrl();
+				} else {
+					$url = $this->container->get('router')->generate($annotation->getUrl());
+				}
+				$event->setResponse(new RedirectResponse($url));
+			}
+		}
+	}
+
+
+
 
 	public function onKernelRequest(GetResponseEvent $event)
 	{
@@ -112,6 +178,9 @@ class RedirectorListener implements EventSubscriberInterface, ContainerAwareInte
 			}
 		}
 	}
+
+
+
 
 	/**
 	 * Processing annotation
