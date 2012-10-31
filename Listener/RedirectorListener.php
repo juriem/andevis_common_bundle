@@ -82,8 +82,7 @@ class RedirectorListener implements EventSubscriberInterface, ContainerAwareInte
 		}
 
 		$object = new \ReflectionObject($controller[0]);
-		$methodName = $object->getMethod($controller[1]);
-
+		$method = $object->getMethod($controller[1]);
 
 		$objectReflection = new \ReflectionObject($object);
 
@@ -100,7 +99,7 @@ class RedirectorListener implements EventSubscriberInterface, ContainerAwareInte
 
 
 		// Processing method annotations
-		$methodAnnotations = $this->container->get('annotation_reader')->getMethodAnnotations($objectReflection->getMethod($methodName));
+		$methodAnnotations = $this->container->get('annotation_reader')->getMethodAnnotations($method);
 
 		foreach($methodAnnotations as $annotation) {
 
