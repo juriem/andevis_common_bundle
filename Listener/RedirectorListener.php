@@ -87,7 +87,7 @@ class RedirectorListener implements EventSubscriberInterface, ContainerAwareInte
 
 		$objectReflection = new \ReflectionObject($object);
 
-		$classAnnotations = $this->container->get('annotation_reader')->getClassAnnotation($objectReflection);
+		//$classAnnotations = $this->container->get('annotation_reader')->getClassAnnotation($objectReflection);
 
 		// Processing global annotations
 		/*$classAnnotations = $this->container->get('annotation_reader')->getClassAnnotations($objectReflection);
