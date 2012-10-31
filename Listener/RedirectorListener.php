@@ -44,7 +44,7 @@ class RedirectorListener extends ContainerAware implements EventSubscriberInterf
 	public static function getSubscribedEvents()
 	{
 		return array(
-				KernelEvents::REQUEST => array(array('onKernelRequest')),
+				KernelEvents::REQUEST => array(array('onKernelRequest', 0)),
 				);
 	}
 
