@@ -1,6 +1,8 @@
 <?php
 namespace Andevis\CommonBundle\Listener;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+
 use Doctrine\Common\Annotations\FileCacheReader;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -34,8 +36,24 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * @author juriem
  *
  */
-class RedirectorListener extends ContainerAware implements EventSubscriberInterface
+class RedirectorListener implements EventSubscriberInterface, ContainerAwareInterface
 {
+
+	/**
+	 *
+	 * @var ContainerInterface
+	 */
+	protected $container;
+
+	/**
+	 * (non-PHPdoc)
+	 * @see \Symfony\Component\DependencyInjection\ContainerAware::setContainer()
+	 */
+	public function setContainer(ContainerInterface $container = null)
+	{
+		$this->container = $container;
+	}
+
 	public function getName()
 	{
 		return 'andevis.event_listener.redirector_listener';
