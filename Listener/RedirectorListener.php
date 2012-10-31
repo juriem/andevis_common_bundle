@@ -82,7 +82,7 @@ class RedirectorListener implements EventSubscriberInterface, ContainerAwareInte
 		}
 
 		$object = new \ReflectionObject($controller[0]);
-		$method = $object->getMethod($controller[1]);
+		$methodName = $object->getMethod($controller[1]);
 
 
 		$objectReflection = new \ReflectionObject($object);
