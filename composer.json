@@ -1,0 +1,22 @@
+{
+	"name": "andevis/common",
+	"type": "symfony-bundle",
+	"description": "Additional bundles from our projects",
+	"keywords": ["kernel", "listener", "twig"],
+	"homepage": "",
+	"license": "",
+	"authors": [
+		{
+			"name": "Juri Em",
+			"email": "juriem1974@gmail.com"
+		}
+	],
+	"require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": ">=2.1,<2.3-dev"
+    },
+	"autoload": {
+		"psr-0": { "Andevis\\CommonBundle": "" }
+	},
+	"target-dir": "Andevis/CommonBundle"
+}

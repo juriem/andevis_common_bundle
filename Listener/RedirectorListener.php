@@ -109,7 +109,10 @@ class RedirectorListener implements EventSubscriberInterface, ContainerAwareInte
 		}
 	}
 
-
+	/**
+	 *
+	 * @param GetResponseForControllerResultEvent $event
+	 */
 	public function onKernelView(GetResponseForControllerResultEvent $event)
 	{
 		$request = $event->getRequest();
