@@ -18,5 +18,6 @@
 	"autoload": {
 		"psr-0": { "Andevis\\CommonBundle": "" }
 	},
-	"target-dir": "Andevis/CommonBundle"
+	"target-dir": "Andevis/CommonBundle",
+	"extra":
 }
